@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head(title = 'Ideas100')" />
+<body>
+<th:block th:replace="template :: header" />
+
+<main class="container">
+    <img src="\img\ask.jpg" alt="Ask photo" class="img-fluid" style="border-radius: 15px;">
+    <div class="row g-5">
+        <div class="col-md-8">
+            <article class="blog-post">
+                <form th:action="@{/questions}" method="post">
+                    <label for="questionName">Question name:</label>
+                    <input type="text" id="questionName" name="name">
+                    <br>
+                    <br>
+                    <label for="questionCategory">Question category:</label>
+                    <select id="questionCategory" name="category">
+                        <option th:each="category : ${category}"
+                                th:value="${category.id}"
+                                th:text="${category.name}">
+                        </option>
+                    </select>
+                    <button type="submit">Create question</button>
+                </form>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th th:text="#{field.allQuestions}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="question : ${questionsPage?.content}">
+                        <td><a th:text="${question.name}" th:href="@{'/questions/'+${question.id}}"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </article>
+
+
+            <nav th:if="${questionsPage?.totalPages > 0}" class="blog-pagination" aria-label="Pagination">
+                <a class="btn btn-outline-primary" th:each="pageNumber : ${pageNumbers}"
+                   th:href="@{''(size=${questionsPage?.size}, page=${pageNumber})}"
+                   th:text=${pageNumber}
+                   th:class="${pageNumber==questionsPage?.number + 1} ? 'btn btn-outline-primary disabled' : 'btn btn-outline-primary'"></a>
+            </nav>
+
+        </div>
+        <th:block th:replace="template :: sidebar" />
+
+    </div>
+
+</main>
+
+<th:block th:replace="template :: footer" />
+</body>
+</html>

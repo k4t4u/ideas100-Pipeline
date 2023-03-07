@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/template::head(title = 'Admin | Add answer')"></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <th:block th:replace="admin/template :: navbar" />
+  <th:block th:replace="admin/template :: sidebar" />
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 th:text="${question.name}" class="m-0"></h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item"><a href="/admin/categories">Categories</a></li>
+              <li class="breadcrumb-item"><a th:text="${category.name}" th:href="@{'/admin/categories/'+${category.id}}"></a></li>
+              <li class="breadcrumb-item active">Add</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 th:text="'Add answer for : '+${question.name}" class="card-title"></h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form method="post" th:object="${answer}">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="answerName">Name</label>
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+                <input th:field="*{name}" type="text" class="form-control" id="answerName" placeholder="Answer name">
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+    </section>
+  </div>
+  <!-- /.content-wrapper -->
+
+  <th:block th:replace="admin/template :: footer" />
+</div>
+<!-- ./wrapper -->
+
+</body>
+</html>

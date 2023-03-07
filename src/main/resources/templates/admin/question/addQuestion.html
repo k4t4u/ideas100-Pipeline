@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/template::head(title = 'Admin | Add question')"></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <th:block th:replace="admin/template :: navbar" />
+    <th:block th:replace="admin/template :: sidebar" />
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 th:text="${category.name}" class="m-0"></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/categories">Categories</a></li>
+                            <li class="breadcrumb-item"><a th:text="${category.name}" th:href="@{'/admin/categories/'+${category.id}}"></a></li>
+                            <li class="breadcrumb-item active">Add Question</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 th:text="'Add question for : '+${category.name}" class="card-title"></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form th:action="@{/questions}" method="post">
+                        <label for="questionName">Question name:</label>
+                        <input type="text" id="questionName" name="name">
+                        <br>
+                        <br>
+                        <label for="questionCategory">Question category:</label>
+                        <select id="questionCategory" name="category">
+                            <option th:each="category : ${category}"
+                                    th:value="${category.id}"
+                                    th:text="${category.name}">
+                            </option>
+                        </select>
+                        <button type="submit">Create question</button>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+
+    <th:block th:replace="admin/template :: footer" />
+</div>
+<!-- ./wrapper -->
+
+</body>
+</html>

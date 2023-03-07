@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: head(title = '100 ideas – search')" />
+<body>
+<th:block th:replace="template :: header" />
+
+<main class="container">
+    <img src="img/search.jpg" alt="Search photo" class="img-fluid" style="border-radius: 15px;">
+    <div class="row g-5">
+        <div class="col-md-8">
+
+            <form>
+                <input type="text" name="query" th:value="${query}"/>
+                <button class="btn btn-primary" type="submit" th:text="#{menu.search}">Search</button>
+            </form>
+
+            <p th:if="${query != null and questionsPage.getNumberOfElements() == 0 }" th:text="#{menu.noResults}">No results</p>
+
+            <article class="blog-post" th:if="${questionsPage != null and questionsPage.totalElements > 0}">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th th:text="#{field.name}"></th>
+                        <th th:text="#{field.edit}"></th>
+                        <th th:text="#{field.delete}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="question : ${questionsPage.content}">
+                        <td><a th:text="${question.name}" th:href="@{'/questions/'+${question.id}}"></a></td>
+                        <td>x</td>
+                        <td>x</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </article>
+
+
+            <nav th:if="${questionsPage!= null and questionsPage.totalPages > 0}" class="blog-pagination" aria-label="Pagination">
+                <a class="btn btn-outline-primary" th:each="pageNumber : ${pageNumbers}"
+                   th:href="@{''(size=${questionsPage.size}, page=${pageNumber}, query=${query})}"
+                   th:text=${pageNumber}
+                   th:class="${pageNumber==questionsPage.number + 1} ? 'btn btn-outline-primary disabled' : 'btn btn-outline-primary'"></a>
+            </nav>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="fst-italic">k4t4u/StormIT</h4>
+                    <p class="mb-0">Piotr Jagodzinski – StormIT</p>
+              </div>
+
+                <div class="p-4">
+                    <h4 class="fst-italic" th:text="#{random.questions}">Random Questions</h4>
+                    <ol class="list-unstyled mb-0">
+                        <li th:each="question : ${@indexViewController.randomQuestions()}"><a th:href="@{'/questions/' + ${question.id}}" th:text="${question.name}"></a></li>
+                    </ol>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="fst-italic">k4t4u</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/k4t4u">GitHub</a></li>
+                        <li><a href="https://www.facebook.com/piotr.jagodzinski.7374">Facebook</a></li>
+                        <li><a href="https://www.youtube.com/@k4t4u/videos">YouTube</a></li>
+                        <li><a href="https://stormit.pl">Blog</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<th:block th:replace="template :: footer" />
+</body>
+</html>
