@@ -1,6 +1,6 @@
 # Ideas 100
 
-100 ideas, 100+ questions, 100+ answers.
+100 ideas, 100+ questions, 100+ answers...
 
 ## Screenshots
 
